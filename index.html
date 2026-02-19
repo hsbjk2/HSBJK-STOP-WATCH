@@ -9,30 +9,33 @@
 :root{
 --steel1:#cfd8dc;
 --steel2:#90a4ae;
---dial:#1e1e1e;
 --accent:#ff3d00;
 --text:#ffffff;
+}
+
+*{
+box-sizing:border-box;
 }
 
 body{
 margin:0;
 background:linear-gradient(135deg,#2c3e50,#000000);
+font-family:Segoe UI, sans-serif;
+color:var(--text);
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-height:100vh;
-font-family:Segoe UI, sans-serif;
-color:var(--text);
-overflow:hidden;
+min-height:100vh;
+padding:20px;
 }
 
-/* Mac Style Clock */
+/* ================= MAC CLOCK (FIXED CORNER) ================= */
 
 .mac-clock{
 position:fixed;
 top:15px;
-right:20px;
+right:15px;
 padding:10px 18px;
 border-radius:12px;
 background:rgba(255,255,255,0.08);
@@ -40,24 +43,23 @@ backdrop-filter:blur(20px);
 box-shadow:0 8px 25px rgba(0,0,0,0.4);
 font-size:14px;
 letter-spacing:1px;
-transition:0.3s;
+z-index:999;
 }
 
-.mac-clock:hover{
-background:rgba(255,255,255,0.15);
-}
-
-/* Watch */
+/* ================= TITLE ================= */
 
 h1{
-letter-spacing:4px;
-margin-bottom:20px;
-color:#ccc;
+letter-spacing:5px;
+margin-bottom:25px;
+color:#ffffff;
+text-align:center;
 }
 
+/* ================= WATCH CONTAINER ================= */
+
 .watch{
-width:360px;
-height:360px;
+width:min(85vw,380px);
+aspect-ratio:1/1;
 border-radius:50%;
 background:linear-gradient(145deg,var(--steel1),var(--steel2));
 box-shadow:
@@ -77,8 +79,8 @@ transform:scale(0.98);
 }
 
 .dial{
-width:300px;
-height:300px;
+width:85%;
+height:85%;
 border-radius:50%;
 background:radial-gradient(circle,#333,#111);
 position:relative;
@@ -91,9 +93,9 @@ box-shadow:inset 0 0 25px black;
 .hand{
 position:absolute;
 width:3px;
-height:130px;
+height:45%;
 background:var(--accent);
-top:20px;
+top:10%;
 transform-origin:bottom center;
 }
 
@@ -106,39 +108,42 @@ position:absolute;
 }
 
 .subdial{
-width:70px;
-height:70px;
+width:22%;
+aspect-ratio:1/1;
 border-radius:50%;
 background:#222;
 position:absolute;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:12px;
+font-size:clamp(10px,2vw,12px);
 color:#ccc;
 box-shadow:inset 0 0 10px black;
+text-align:center;
 }
 
-#minutes{ top:40px; left:115px; }
-#hours{ bottom:40px; left:115px; }
+#minutes{ top:12%; left:39%; }
+#hours{ bottom:12%; left:39%; }
 
 .digital{
 position:absolute;
-bottom:20px;
-font-size:16px;
+bottom:8%;
+font-size:clamp(14px,3vw,18px);
 }
 
-/* Modern Buttons */
+/* ================= BUTTONS ================= */
 
 .controls{
-margin-top:25px;
+margin-top:30px;
 display:flex;
-gap:15px;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
 }
 
 button{
-padding:10px 18px;
-border-radius:25px;
+padding:12px 30px;
+border-radius:30px;
 border:1px solid rgba(255,255,255,0.2);
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(15px);
@@ -147,17 +152,19 @@ cursor:pointer;
 font-weight:600;
 transition:0.3s;
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
+min-width:120px;
 }
 
 button:hover{
 background:rgba(255,255,255,0.2);
-transform:translateY(-2px);
+transform:translateY(-3px);
 }
 
-/* Modern Lap Panel */
+/* ================= LAP PANEL ================= */
 
 .laps{
-margin-top:15px;
+margin-top:20px;
+width:min(90vw,400px);
 max-height:160px;
 overflow-y:auto;
 padding:10px 12px;
@@ -182,35 +189,47 @@ background:rgba(255,255,255,0.12);
 transform:translateX(3px);
 }
 
-/* Scrollbar */
-
 .laps::-webkit-scrollbar{
 width:6px;
 }
-
-.laps::-webkit-scrollbar-track{
-background:transparent;
-}
-
 .laps::-webkit-scrollbar-thumb{
 background:linear-gradient(#888,#555);
 border-radius:10px;
 }
 
-.laps::-webkit-scrollbar-thumb:hover{
-background:#aaa;
-}
+/* ================= STATS ================= */
 
 .stats{
 font-size:13px;
 opacity:0.8;
-margin-top:10px;
+margin-top:15px;
+text-align:center;
 }
 
+/* ================= FOOTER BRANDING ================= */
+
 footer{
-margin-top:20px;
-opacity:0.6;
-font-size:13px;
+margin-top:30px;
+text-align:center;
+font-size:14px;
+opacity:0.8;
+}
+
+.brand{
+font-weight:bold;
+letter-spacing:2px;
+color:#ff3d00;
+}
+
+/* ================= RESPONSIVE (NO CLOCK MOVEMENT) ================= */
+
+@media(max-width:480px){
+.mac-clock{
+top:15px;
+right:15px;
+font-size:12px;
+padding:8px 12px;
+}
 }
 </style>
 </head>
@@ -219,7 +238,7 @@ font-size:13px;
 
 <div class="mac-clock" id="macClock"></div>
 
-<h1>STOP WATCH</h1>
+<h1>HSBJK STOP WATCH</h1>
 
 <div class="watch" onclick="toggleStartPause()">
 <div class="dial">
@@ -245,7 +264,8 @@ font-size:13px;
 </div>
 
 <footer>
-Modern Mechanical Edition © 2026 HSBJK Technologies
+<div class="brand">HSBJK Technologies</div>
+Modern Mechanical Chronograph Edition © 2026
 </footer>
 
 <script>
@@ -301,16 +321,12 @@ document.getElementById("hours").innerHTML="Hr<br>"+Math.floor(elapsed/3600000);
 
 function lap(){
 if(!running) return;
-
 laps.push(elapsed);
-
 let div=document.createElement("div");
 div.textContent="Lap "+laps.length+": "+format(elapsed);
-
 const lapContainer=document.getElementById("laps");
 lapContainer.appendChild(div);
-lapContainer.scrollTop = lapContainer.scrollHeight;
-
+lapContainer.scrollTop=lapContainer.scrollHeight;
 updateStats();
 }
 
@@ -329,13 +345,10 @@ slowest.textContent=format(s);
 average.textContent=format(a);
 }
 
-/* Mac Date & Time */
-
 function updateMacClock(){
 let now=new Date();
-let time=now.toLocaleTimeString();
-let date=now.toDateString();
-document.getElementById("macClock").innerHTML=date+" | "+time;
+document.getElementById("macClock").innerHTML=
+now.toDateString()+" | "+now.toLocaleTimeString();
 }
 setInterval(updateMacClock,1000);
 updateMacClock();
